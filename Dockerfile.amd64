@@ -14,13 +14,25 @@
 ARG BIRD_IMAGE=calico/bird:latest
 FROM ${BIRD_IMAGE} as bird
 
-FROM alpine:3.8
-MAINTAINER Tom Denham <tom@projectcalico.org>
+FROM debian:9.8-slim
+LABEL maintainer "Casey Davenport <casey@tigera.io>"
 
 ARG ARCH=amd64
 
-# Install remaining runtime deps required for felix from the global repository
-RUN apk add --no-cache ip6tables ipset iputils iproute2 conntrack-tools runit ca-certificates
+RUN apt-get update && apt-get install -y \
+    iptables \ 
+    iptables-converter \ 
+    iptables-nftables-compat \ 
+    iptables-optimizer \ 
+    iptables-persistent \ 
+    ipset \ 
+    iputils-arping \
+    iputils-ping \
+    iputils-tracepath \
+    iproute2 \ 
+    conntrackd \ 
+    runit \ 
+    ca-certificates
 
 # Copy our bird binaries in
 COPY --from=bird /bird* /bin/
