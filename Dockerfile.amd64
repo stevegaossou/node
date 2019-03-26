@@ -14,23 +14,19 @@
 ARG BIRD_IMAGE=calico/bird:latest
 FROM ${BIRD_IMAGE} as bird
 
-FROM debian:9.8-slim
+FROM debian:buster-slim
 LABEL maintainer "Casey Davenport <casey@tigera.io>"
 
 ARG ARCH=amd64
 
 RUN apt-get update && apt-get install -y \
     iptables \ 
-    iptables-converter \ 
-    iptables-nftables-compat \ 
-    iptables-optimizer \ 
-    iptables-persistent \ 
     ipset \ 
     iputils-arping \
     iputils-ping \
     iputils-tracepath \
     iproute2 \ 
-    conntrackd \ 
+    conntrack \ 
     runit \ 
     ca-certificates
 
