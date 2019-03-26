@@ -14,7 +14,7 @@
 ARG BIRD_IMAGE=calico/bird:latest
 FROM ${BIRD_IMAGE} as bird
 
-FROM debian:buster-slim
+FROM debian:9.8-slim
 LABEL maintainer "Casey Davenport <casey@tigera.io>"
 
 ARG ARCH=amd64
@@ -30,17 +30,6 @@ RUN apt-get update && apt-get install -y \
     conntrack \ 
     runit \ 
     ca-certificates
-
-# Starting with iptables v1.8.2 the binary package includes iptables-nft and
-# iptables-legacy, two variants of the iptables command line interface. The
-# nftables-based is the default in Debian Buster and works with the nf_tables
-# Linux kernel subsystem. The legacy one uses the x_tables Linux kernel
-# subsystem. Users can use the update-alternatives system to select one variant
-# or the other.
-# Force iptables and ip6tables to use legacy and output their status afterwards
-RUN update-alternatives --set iptables /usr/sbin/iptables-legacy && \
-    update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy && \ 
-    update-alternatives --get-selections
 
 # Copy our bird binaries in
 COPY --from=bird /bird* /bin/
