@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -y \
     runit \ 
     # Need kmod to ensure ip6tables-save works correctly
     kmod \ 
+    # Also needed (provides utilities for browsing procfs like ps) 
+    procps \
     ca-certificates
 
 # Starting with iptables v1.8.2 the binary package includes iptables-nft and
