@@ -27,13 +27,15 @@ RUN apt-get update && apt-get install -y \
     iputils-arping \
     iputils-ping \
     iputils-tracepath \
+    # Need arp 
+    net-tools \ 
     iproute2 \ 
     conntrack \ 
     runit \ 
     # Need kmod to ensure ip6tables-save works correctly
     kmod \ 
     # Also needed (provides utilities for browsing procfs like ps) 
-    procps \
+    procps \    
     ca-certificates
 
 # Starting with iptables v1.8.2 the binary package includes iptables-nft and
