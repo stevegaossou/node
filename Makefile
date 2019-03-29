@@ -548,8 +548,7 @@ st: dist/calicoctl busybox.tar calico-node.tar workload.tar run-etcd calico_test
 ###############################################################################
 .PHONY: ci
 ## Run what CI runs
-# ci: static-checks fv image-all st
-ci: 
+ci: static-checks fv image-all st
 
 ## Deploys images to registry
 cd:
