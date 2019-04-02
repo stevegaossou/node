@@ -82,3 +82,48 @@ make st DEBUG_FAILURES=true
 - A more primitive approach is just to add your own breakpoints (using something like `time.sleep(x)`)
 - You should know where to add these after reviewing the diagnostic logs for failed tests (by looking at the stacktraces)
 
+## Linux Dependencies 
+Below is a listing of dependencies that Calico node has on the underlying kernel. The list is currently _partially_ complete. 
+
+- [`/user/sbin/arp`](http://man7.org/linux/man-pages/man8/arp.8.html)
+    - Manipulate the system ARP cache
+    - Package: `net-tools`
+- [`/user/sbin/conntrack`](http://man7.org/linux/man-pages/man8/arp.8.html)
+    - Netfilter connection tracking
+    - Package: `conntrack`
+- [`/bin/ip`](https://linux.die.net/man/8/ip)
+    - Show / manipulate routing, devices, policy routing and tunnels
+    - Package: `iproute2`
+- [`/usr/sbin/iptables`](https://linux.die.net/man/8/iptables)
+    - Admin tool for IPv4 packet filtering and NAT
+    - Note, we're using the legacy version `iptables-legacy → xtables-legacy-multi` (divergence introduced in `iptables v1.8.2`)
+    - Package: `iptables`
+- [`/usr/sbin/iptables-restore`](https://linux.die.net/man/8/iptables-restore)
+    - Note, we're using the legacy version `iptables-legacy-restore → xtables-legacy-multi` (divergence introduced in `iptables v1.8.2`)
+    - Package: `iptables`
+- [`/usr/sbin/iptables-save`](https://linux.die.net/man/8/iptables-save)
+    - Note, we're using the legacy version `iptables-legacy-save → xtables-legacy-multi` (divergence introduced in `iptables v1.8.2`)
+    - Package: `iptables`
+- [`/usr/sbin/ip6tables`](https://linux.die.net/man/8/ip6tables)
+    - Admin tool for IPv6 packet filtering and NAT
+    - Note, we're using the legacy version `ip6tables-legacy → xtables-legacy-multi` (divergence introduced in `iptables v1.8.2`)
+    - Package: `iptables`
+- `/usr/sbin/ip6tables-restore`
+    - Note, we using the legacy version `ip6tables-legacy-restore → xtables-legacy-multi` (divergence introduced in `iptables v1.8.2`)
+    - Package: `iptables`
+- `/usr/sbin/ip6tables-save`
+    - Note, we using the legacy version `ip6tables-legacy-save → xtables-legacy-multi` (divergence introduced in `iptables v1.8.2`)
+    - Package: `iptables`
+- [`/bin/ps`](https://linux.die.net/man/1/ps)
+    - Snapshot of the current processes 
+    - Package: `procps`
+- [`/bin/kmod`](http://man7.org/linux/man-pages/man8/kmod.8.html)
+    - Manage Linux Kernel modules 
+    - soft link for `depmod`, `insmod`, `lsmod`, `modinfo`, `modprobe`, `rmmo`
+    - Package: `kmod`
+- [`/sbin/runit`](http://smarden.org/runit/)
+    - Init scheme with service supervision
+    - Package: `runit`
+- [`/usr/sbin/runsvchdir`](http://smarden.org/runit/runsvdir.8.html)
+    - Starts and monitors a collection of runsv processes
+    - Package: `runit`
