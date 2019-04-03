@@ -25,21 +25,39 @@ For more information, see `make help`.
 
 [contrib]: https://github.com/projectcalico/calico/blob/master/CONTRIBUTING_CODE.md
 
-## How can I run Calico Node tests?
+## How can I run tests?
 
-Calico Node uses Python and [Nose](https://nose.readthedocs.io/en/latest/) for running tests.
-
-Calico Node tests are divided into the following categories: 
-- `fv`: ???
+Tests for this repo are divided into the following categories: 
+- `fv`: Package scoped tests
 - `st`: System integration tests 
 - `k8s-test`: Kubernetes integration tests 
 
-To run any of the above categories use: 
+Assuming you have installed the necessary depedencies (see below for details), you can run any of the above categories using: 
 ```
-make <category>
+make <target>
+```
+Where `target` is one of `fv`, `st`, or `k8s-test`. You can also use `test`, which aggregates `fv` and `st`. 
+
+### Dependencies for running tests
+
+If you want to be able to run tests locally, you will need to install:
+- GNU make
+
+For `st` system integration tests, node uses: 
+- Python (>= 2.7 ???)
+- [Nose](https://nose.readthedocs.io/en/latest/)
+
+For `fv` packaged scoped tests, node uses: 
+- Golang (>=1.7)
+- [Ginkgo](https://github.com/onsi/ginkgo)
+
+You will also need to install Ginkgo explicitly: 
+```
+go get -u github.com/Masterminds/glide
+go get -u github.com/onsi/ginkgo/ginkgo
 ```
 
-Note, to run the `k8s-test` test category, you will need to have `kubectl` setup on your machine. Go here for [instructions on setting up `kubectl` for your environment](https://kubernetes.io/docs/tasks/tools/install-kubectl/).  
+For `k8s-test` Kubernetes tests, you will need to have `kubectl` setup on your machine. Go here for [instructions on setting up `kubectl` for your environment](https://kubernetes.io/docs/tasks/tools/install-kubectl/).  
 
 ## How can I run a subset of the tests?
 
@@ -83,7 +101,7 @@ make st DEBUG_FAILURES=true
 - You should know where to add these after reviewing the diagnostic logs for failed tests (by looking at the stacktraces)
 
 ## Linux Dependencies 
-Below is a listing of dependencies that Calico node has on the underlying kernel. The list is currently _partially_ complete. 
+Below is a listing of userspace tools packaged into the node container. The list is not exhuastive, but highlights some of the key dependencies required for node to operate correctly. 
 
 - [`/user/sbin/arp`](http://man7.org/linux/man-pages/man8/arp.8.html)
     - Manipulate the system ARP cache
